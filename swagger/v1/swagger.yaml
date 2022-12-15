@@ -42,9 +42,9 @@ paths:
               example:
                 success: true
                 user:
-                  id: 13
+                  id: 47
                   email: user_1@jitera.com
-                  password: 2c9e5220f6219d3e36c0057aa656a8d4
+                  password: 5f0034b0100a594b0e7985a55add6c11
                   phone: 
                   name: 
                   created_at: '2021-12-02T16:55:50.696+09:00'
@@ -97,7 +97,7 @@ paths:
             application/json:
               example:
                 user:
-                  id: 13
+                  id: 47
                   email: user_1@jitera.com
                   password: 
                   phone: 
