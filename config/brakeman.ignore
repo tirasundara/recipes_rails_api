@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "File Access",
+      "warning_code": 16,
+      "fingerprint": "1f6969278d353eec0776126d9aefacb69054e98806929ad3fb21d7ee3f18a38a",
+      "check_name": "FileAccess",
+      "message": "Parameter value used in file name",
+      "file": "app/mailers/dashboard_mailer.rb",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/file_access/",
+      "code": "File.read(params[:file_path])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "DashboardMailer",
+        "method": "dashboard_index_summary"
+      },
+      "user_input": "params[:file_path]",
+      "confidence": "High",
+      "note": ""
+    }
+  ],
+  "updated": "2022-12-15 10:55:08 +0000",
+  "brakeman_version": "5.2.3"
+}
