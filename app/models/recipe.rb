@@ -28,7 +28,7 @@ class Recipe < ApplicationRecord
   # * And also, it will be faster to perform the search. Since, we don't need to convert string 'HH:MM:SS' to seconds in the db level to query recipes by time range
 
   validates :time, length: { maximum: 8, minimum: 8, message: I18n.t('.out_of_range_error') },
-                   format: { with: DURATION_VALIDATION_FORMAT, message: I18n.t('.invalid_duration_format')},
+                   format: { with: DURATION_VALIDATION_FORMAT, message: I18n.t('.invalid_duration_format') },
                    presence: true
 
   validates :difficulty, presence: true

@@ -3,5 +3,5 @@ module ConstantValidatable
   KATAKANA_VALIDATION_FORMAT = %r{\A[ァ-ヶー－]+\z} # rubocop:disable Style/RegexpLiteral
   URL_VALIDATION_FORMAT = %r{\A(http|https)://[a-z0-9]+([\-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?\z}
   PHONE_NUMBER_VALIDATION_FORMAT = %r{\A[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}\z} # rubocop:disable Style/RegexpLiteral
-  DURATION_VALIDATION_FORMAT = %r{(?<hour>\d{2})\:(?<min>\d{2})\:(?<sec>\d{2})}
+  DURATION_VALIDATION_FORMAT = /(?<hour>\d{2}):(?<min>\d{2}):(?<sec>\d{2})/
 end

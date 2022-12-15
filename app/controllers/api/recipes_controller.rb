@@ -49,7 +49,6 @@ class Api::RecipesController < Api::BaseController
     render json: @recipes, each_serializer: RecipeSerializer
   end
 
-
   private
 
   def recipe_query_service

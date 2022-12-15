@@ -5,7 +5,7 @@ module Queries
     def initialize(scope)
       @scope = scope
     end
-  
+
     def call(filters, **options)
       raise NotImplementedError, "implement ##{__method__} in the subclass!"
     end

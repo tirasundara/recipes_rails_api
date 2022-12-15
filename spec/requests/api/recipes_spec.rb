@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/recipes', type: :request do
   before do
-    create(:recipe, time: "00:15:00")
+    create(:recipe, time: '00:15:00')
   end
 
   # jitera-hook-for-rswag-example
@@ -360,8 +360,8 @@ RSpec.describe 'api/recipes', type: :request do
       security [bearerAuth: []]
       parameter name: 'title', in: :query, type: 'string', description: 'recipe title', required: false
       parameter name: 'difficulty', in: :query, type: 'string', description: "recipe's difficulty. Valid values: 'easy', 'normal', 'challenging'", required: false
-      parameter name: 'min_time', in: :query, type: 'integer', description: "minimum duration in seconds", required: false
-      parameter name: 'max_time', in: :query, type: 'integer', description: "maximum duration in seconds", required: false
+      parameter name: 'min_time', in: :query, type: 'integer', description: 'minimum duration in seconds', required: false
+      parameter name: 'max_time', in: :query, type: 'integer', description: 'maximum duration in seconds', required: false
 
       response '200', 'index' do
         examples 'application/json' => {
