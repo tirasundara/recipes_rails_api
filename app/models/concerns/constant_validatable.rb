@@ -2,6 +2,6 @@ module ConstantValidatable
   HIRAGANA_VALIDATION_FORMAT = %r{\A[ぁ-んー－]+\z} # rubocop:disable Style/RegexpLiteral
   KATAKANA_VALIDATION_FORMAT = %r{\A[ァ-ヶー－]+\z} # rubocop:disable Style/RegexpLiteral
   URL_VALIDATION_FORMAT = %r{\A(http|https)://[a-z0-9]+([\-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(/.*)?\z}
-  PHONE_NUMBER_VALIDATION_FORMAT = %r{\A[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}\z}  # rubocop:disable Style/RegexpLiteral
+  PHONE_NUMBER_VALIDATION_FORMAT = %r{\A[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}\z} # rubocop:disable Style/RegexpLiteral
   DURATION_VALIDATION_FORMAT = %r{\A(?<hour>\d{2}):(?<min>\d{2}):(?<sec>\d{2})\z}  # rubocop:disable Style/RegexpLiteral
 end
