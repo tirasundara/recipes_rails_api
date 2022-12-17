@@ -42,9 +42,9 @@ paths:
               example:
                 success: true
                 user:
-                  id: 47
+                  id: 5
                   email: user_1@jitera.com
-                  password: 5f0034b0100a594b0e7985a55add6c11
+                  password: 
                   phone: 
                   name: 
                   created_at: '2021-12-02T16:55:50.696+09:00'
@@ -97,7 +97,7 @@ paths:
             application/json:
               example:
                 user:
-                  id: 47
+                  id: 5
                   email: user_1@jitera.com
                   password: 
                   phone: 
@@ -850,6 +850,48 @@ paths:
                     recipe_id: foreign_key
                   user_id: foreign_key
                 error_message: string
+  "/api/reviews":
+    post:
+      summary: Create reviews
+      tags:
+      - create
+      security:
+      - bearerAuth: []
+      parameters: []
+      responses:
+        '201':
+          description: create
+          content:
+            application/json:
+              example: {}
+        '422':
+          description: create
+          content:
+            application/json:
+              example:
+                recipe:
+                - must exist
+                rating:
+                - must be an integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: object
+                  properties:
+                    rating:
+                      type: integer
+                      example: 5
+                      description: 'valid value: integer 1 to 5'
+                    description:
+                      type: text
+                      example: nice recipe!
+                    recipe_id:
+                      type: foreign_key
+                      example: 1
 servers:
 - url: "{defaultHost}"
   variables:
