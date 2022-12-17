@@ -39,7 +39,8 @@ resources :categories, only: [:index, :create, :show, :update, :destroy] do
  end
 
 resources :recipes, only: [:index, :create, :show, :update, :destroy] do
- end
+  resources :reviews, only: [:create, :show, :update, :destroy]
+end
 
   end
 

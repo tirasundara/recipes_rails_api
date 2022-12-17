@@ -32,7 +32,7 @@ module Api
     private
 
     def base_render_record_not_found(exception)
-      render json: { message: exception.message }, status: :not_found
+      render json: { message: I18n.t('errors.resource_not_found')}, status: :not_found
     end
 
     def base_render_unprocessable_entity(exception)

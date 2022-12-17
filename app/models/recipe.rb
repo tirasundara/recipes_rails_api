@@ -4,6 +4,7 @@ class Recipe < ApplicationRecord
   # jitera-anchor-dont-touch: relations
 
   has_many :ingredients, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   belongs_to :category
 
