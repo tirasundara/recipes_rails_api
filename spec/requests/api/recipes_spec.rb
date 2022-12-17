@@ -13,7 +13,7 @@ RSpec.describe 'api/recipes', type: :request do
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
@@ -84,11 +84,11 @@ RSpec.describe 'api/recipes', type: :request do
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          recipes: {
+          recipe: {
             type: :object,
             properties: {
               title: {
@@ -127,7 +127,7 @@ RSpec.describe 'api/recipes', type: :request do
       }
       response '200', 'update' do
         examples 'application/json' => {
-          'recipes' => {
+          'recipe' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -175,8 +175,12 @@ RSpec.describe 'api/recipes', type: :request do
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
         let(:id) { create(:recipe).id }
+        let(:params) do
+          {
+            recipe: build(:recipe).attributes
+          }
+        end
 
-        let(:params) {}
         run_test! do |response|
           expect(response.status).to eq(200)
         end
@@ -190,7 +194,7 @@ RSpec.describe 'api/recipes', type: :request do
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
@@ -262,7 +266,7 @@ RSpec.describe 'api/recipes', type: :request do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          recipes: {
+          recipe: {
             type: :object,
             properties: {
               title: {
@@ -301,7 +305,7 @@ RSpec.describe 'api/recipes', type: :request do
       }
       response '200', 'create' do
         examples 'application/json' => {
-          'recipes' => {
+          'recipe' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -344,7 +348,12 @@ RSpec.describe 'api/recipes', type: :request do
           'error_object' => {}
 
         }
-        let(:params) {}
+        let(:params) do
+          {
+            recipe: build(:recipe).attributes
+          }
+        end
+
         run_test! do |response|
           expect(response.status).to eq(200)
         end
