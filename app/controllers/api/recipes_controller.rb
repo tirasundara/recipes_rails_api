@@ -16,7 +16,7 @@ class Api::RecipesController < Api::BaseController
   end
 
   def show
-    @recipe = Recipe.find_by(id: params[:id])
+    @recipe = Recipe.includes(:ingredients, reviews: :user).find_by(id: params[:id])
     @error_message = true if @recipe.blank?
   end
 
@@ -35,7 +35,7 @@ class Api::RecipesController < Api::BaseController
   private
 
   def recipe_query_service
-    @recipe_query_service ||= ::Queries::Recipe.new(::Recipe.includes(:ingredients))
+    @recipe_query_service ||= ::Queries::Recipe.new(::Recipe.includes(:ingredients, reviews: :user))
   end
 
   def recipe_params
