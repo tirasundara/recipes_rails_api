@@ -2,9 +2,11 @@
 
 module Weights
   class BaseWeight
+    include Convertable
+
     def initialize(value)
       @value = value
-      @unit_name = nil  # subclass must assign its unit name
+      @unit = nil  # subclass must assign its unit name
     end
 
     def value
@@ -15,7 +17,7 @@ module Weights
       raise NotImplementedError, "implement ##{__method__} in subclass!"
     end
 
-    def unit_name
+    def unit
       raise NotImplementedError, "implement ##{__method__} in subclass!"
     end
   end

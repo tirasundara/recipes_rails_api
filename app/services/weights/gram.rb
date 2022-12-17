@@ -3,11 +3,11 @@
 module Weights
   class Gram < BaseWeight
     attr_accessor :value
-    attr_reader :unit_name
+    attr_reader :unit
 
     def initialize(value)
       super
-      @unit_name = :g
+      @unit = :g
     end
   end
 end

@@ -18,9 +18,9 @@ RSpec.describe ::Weights::MilliGram do
     end
   end
 
-  describe '#unit_name' do
-    it 'returns the unit_name' do
-      expect(milli_gram.unit_name).to eq(:mg)
+  describe '#unit' do
+    it 'returns the unit' do
+      expect(milli_gram.unit).to eq(:mg)
     end
   end
 end
