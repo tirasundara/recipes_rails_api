@@ -18,9 +18,9 @@ RSpec.describe ::Weights::Gram do
     end
   end
 
-  describe '#unit_name' do
-    it 'returns the unit_name' do
-      expect(gram.unit_name).to eq(:g)
+  describe '#unit' do
+    it 'returns the unit' do
+      expect(gram.unit).to eq(:g)
     end
   end
 end

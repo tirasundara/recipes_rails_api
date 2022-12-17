@@ -21,10 +21,10 @@ RSpec.describe ::Weights::BaseWeight do
     end
   end
 
-  describe '#unit_name' do
+  describe '#unit' do
     it 'raises NotImplementedError' do
       expect do
-        base_weight.unit_name
+        base_weight.unit
       end.to raise_error(NotImplementedError)
     end
   end

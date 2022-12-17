@@ -18,9 +18,9 @@ RSpec.describe ::Weights::KiloGram do
     end
   end
 
-  describe '#unit_name' do
-    it 'returns the unit_name' do
-      expect(kilo_gram.unit_name).to eq(:kg)
+  describe '#unit' do
+    it 'returns the unit' do
+      expect(kilo_gram.unit).to eq(:kg)
     end
   end
 end
