@@ -6,9 +6,18 @@
 # Means, it has the abilities to do conversion from one weight (their self weight) to another
 module Weights
   module Convertable
-    # try to make it like: #to_s, #to_i
-    # actually, we can implement meta-programming to define these methods
-    # but, to make it clear, I define them one by one here
+    # Let's try to make methods like: #to_s, #to_i -- so we'd have #to_mg, #to_g, #to_kg
+
+    # Actually, we can write meta-programming code to define those methods:
+    #
+    # { mg: MilliGram, g: Gram, kg: KiloGram }.each do |unit_, weight_class|
+    #   define_method "to_#{unit_}" do
+    #     value = weight_conversion.value_in(unit_)
+    #     weight_class.new(value)
+    #   end
+    # end
+
+    # But, in order to make things clearer, let's define them one by one for now
     def to_g
       g_value = weight_conversion.value_in(:g)
 

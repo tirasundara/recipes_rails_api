@@ -2,7 +2,6 @@
 
 module Api
   class ReviewsController < Api::BaseController
-    # jitera-anchor-dont-touch: before_action_filter
     before_action :doorkeeper_authorize!, only: %i[create update destroy]
     before_action :current_user_authenticate, only: %i[create update destroy]
 
@@ -23,7 +22,6 @@ module Api
 
     def update
       # for security reason, make sure that `current_user` will only be able to update his own review(s)
-      # current_user.reviews.update!(params[:id], review_params)
       rev = current_user.reviews.find(params[:id])
       rev.update!(review_params)
 
