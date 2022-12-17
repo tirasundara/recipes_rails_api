@@ -5,11 +5,12 @@ RSpec.describe 'api/reviews', type: :request do
 
   # jitera-hook-for-rswag-example
 
-  path '/api/reviews' do
+  path "/api/recipes/{recipe_id}/reviews" do
     post 'Create reviews' do
       tags 'create'
       consumes 'application/json'
       security [bearerAuth: []]
+      parameter name: 'recipe_id', in: :path, type: 'string', description: 'recipe_id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
@@ -24,10 +25,6 @@ RSpec.describe 'api/reviews', type: :request do
               description: {
                 type: :text,
                 example: 'nice recipe!'
-              },
-              recipe_id: {
-                type: :foreign_key,
-                example: 1
               }
             }
           }
@@ -39,10 +36,10 @@ RSpec.describe 'api/reviews', type: :request do
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
+        let(:recipe_id) { recipe.id }
         let(:params) do
           {
             review: {
-              recipe_id: recipe.id,
               rating: 5,
               description: 'nice recipe!'
             }
@@ -62,10 +59,10 @@ RSpec.describe 'api/reviews', type: :request do
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
+        let(:recipe_id) { recipe.id }
         let(:params) do
           {
             review: {
-              recipe_id: 0,
               rating: 2.5,
               description: 'nice recipe!'
             }

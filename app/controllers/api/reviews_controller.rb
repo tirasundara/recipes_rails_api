@@ -8,8 +8,8 @@ module Api
 
     def create
       # I assume, one user will only be able to give one review to the same recipe_id
-      # but user is able to update its review
-      review = current_user.reviews.find_or_initialize_by(recipe_id: review_params[:recipe_id])
+      # but user will be able to update its review
+      review = current_user.reviews.find_or_initialize_by(recipe_id: params[:recipe_id])
       review.rating = review_params[:rating]
       review.description = review_params[:description]
 
