@@ -35,6 +35,8 @@ resources :users_sessions, only: [:create] do
 resources :ingredients, only: [:index, :create, :show, :update, :destroy] do
  end
 
+resources :reviews, only: :create
+
 resources :categories, only: [:index, :create, :show, :update, :destroy] do
  end
 
