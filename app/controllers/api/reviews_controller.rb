@@ -2,10 +2,9 @@
 
 module Api
   class ReviewsController < Api::BaseController
-
     # jitera-anchor-dont-touch: before_action_filter
-    before_action :doorkeeper_authorize!, only: [:create, :update, :destroy]
-    before_action :current_user_authenticate, only: [:create, :update, :destroy]
+    before_action :doorkeeper_authorize!, only: %i[create update destroy]
+    before_action :current_user_authenticate, only: %i[create update destroy]
 
     def create
       # I assume, each user will only be able to give one review to the same recipe_id
@@ -37,7 +36,6 @@ module Api
 
       render json: {}, status: :no_content
     end
-
 
     private
 

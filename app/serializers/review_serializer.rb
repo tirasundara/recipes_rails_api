@@ -3,7 +3,6 @@ class ReviewSerializer < ActiveModel::Serializer
 
   belongs_to :recipe
   belongs_to :user do
-    scope ? scope : object.user
+    scope || object.user
   end
-
 end

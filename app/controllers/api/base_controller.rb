@@ -31,8 +31,8 @@ module Api
 
     private
 
-    def base_render_record_not_found(exception)
-      render json: { message: I18n.t('errors.resource_not_found')}, status: :not_found
+    def base_render_record_not_found(_exception)
+      render json: { message: I18n.t('errors.resource_not_found') }, status: :not_found
     end
 
     def base_render_unprocessable_entity(exception)
