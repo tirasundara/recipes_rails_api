@@ -5,12 +5,13 @@ class Api::RecipesController < Api::BaseController
 
   # jitera-anchor-dont-touch: actions
   def destroy
-    @recipe = Recipe.find_by(id: params[:id])
-    @error_message = true unless @recipe&.destroy
+    current_user.recipes.destroy(params[:id])
+
+    render json: {}, status: :no_content
   end
 
   def update
-    @recipe = Recipe.find(params[:id])
+    @recipe = current_user.recipes.find(params[:id])
 
     @error_object = @recipe.errors.messages unless @recipe.update(recipe_params)
   end

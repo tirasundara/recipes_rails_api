@@ -11,68 +11,19 @@ RSpec.describe 'api/recipes', type: :request do
     delete 'Destroy recipes' do
       tags 'delete'
       consumes 'application/json'
-
       security [bearerAuth: []]
       parameter name: 'id', in: :path, type: 'integer', description: 'id'
-      parameter name: :params, in: :body, schema: {
-        type: :object,
-        properties: {
-        }
-      }
-      response '200', 'delete' do
-        examples 'application/json' => {
-          'recipes' => {
-            'id' => 'integer',
 
-            'created_at' => 'datetime',
-
-            'updated_at' => 'datetime',
-
-            'title' => 'string',
-
-            'descriptions' => 'text',
-
-            'time' => 'string',
-
-            'difficulty' => 'enum_type',
-
-            'category_id' => 'foreign_key',
-
-            'ingredients' =>
-  [
-    {
-
-      'id' => 'integer',
-
-      'created_at' => 'datetime',
-
-      'updated_at' => 'datetime',
-
-      'unit' => 'enum_type',
-
-      'amount' => 'float',
-
-      'recipe_id' => 'foreign_key'
-
-    }
-  ],
-
-            'user_id' => 'foreign_key'
-
-          },
-
-          'error_message' => 'string'
-
-        }
+      response '204', 'delete' do
+        examples 'application/json' => {}
 
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
-        let(:params) {}
-        let(:id) { create(:recipe).id }
+        let(:id) { create(:recipe, user: resource_owner).id }
 
         run_test! do |response|
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(204)
         end
       end
     end
@@ -125,6 +76,7 @@ RSpec.describe 'api/recipes', type: :request do
           }
         }
       }
+
       response '200', 'update' do
         examples 'application/json' => {
           'recipe' => {
@@ -174,7 +126,7 @@ RSpec.describe 'api/recipes', type: :request do
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
-        let(:id) { create(:recipe).id }
+        let(:id) { create(:recipe, user: resource_owner).id }
         let(:params) do
           {
             recipe: build(:recipe).attributes
