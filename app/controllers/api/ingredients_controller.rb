@@ -11,12 +11,7 @@ class Api::IngredientsController < Api::BaseController
   def update
     @ingredient = Ingredient.find_by(id: params[:id])
 
-    request = {}
-    request.merge!('unit' => params.dig(:ingredients, :unit))
-    request.merge!('amount' => params.dig(:ingredients, :amount))
-    request.merge!('recipe_id' => params.dig(:ingredients, :recipe_id))
-
-    @error_object = @ingredient.errors.messages unless @ingredient.update(request)
+    @error_object = @ingredient.errors.messages unless @ingredient&.update(ingredient_params)
   end
 
   def show
@@ -25,24 +20,18 @@ class Api::IngredientsController < Api::BaseController
   end
 
   def create
-    @ingredient = Ingredient.new
+    @ingredient = Ingredient.new(ingredient_params)
 
-    request = {}
-    request.merge!('unit' => params.dig(:ingredients, :unit))
-    request.merge!('amount' => params.dig(:ingredients, :amount))
-    request.merge!('recipe_id' => params.dig(:ingredients, :recipe_id))
-
-    @ingredient.assign_attributes(request)
     @error_object = @ingredient.errors.messages unless @ingredient.save
   end
 
   def index
-    request = {}
-
-    request.merge!('unit' => params.dig(:ingredients, :unit))
-    request.merge!('amount' => params.dig(:ingredients, :amount))
-    request.merge!('recipe_id' => params.dig(:ingredients, :recipe_id))
-
     @ingredients = Ingredient.all
+  end
+
+  private
+
+  def ingredient_params
+    params.require(:ingredient).permit(:recipe_id, :unit, :amount)
   end
 end

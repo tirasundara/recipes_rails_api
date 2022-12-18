@@ -1,9 +1,7 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/ingredients', type: :request do
-  before do
-    create(:ingredient)
-  end
+  let!(:ingredient) { create(:ingredient) }
 
   # jitera-hook-for-rswag-example
 
@@ -79,9 +77,10 @@ RSpec.describe 'api/ingredients', type: :request do
           }
         }
       }
+
       response '200', 'update' do
         examples 'application/json' => {
-          'ingredients' => {
+          'ingredient' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -101,9 +100,13 @@ RSpec.describe 'api/ingredients', type: :request do
           'error_object' => {}
 
         }
-        let(:id) { create(:ingredient).id }
+        let(:id) { ingredient.id }
+        let(:params) do
+          {
+            ingredient: ingredient.attributes
+          }
+        end
 
-        let(:params) {}
         run_test! do |response|
           expect(response.status).to eq(200)
         end
@@ -160,7 +163,7 @@ RSpec.describe 'api/ingredients', type: :request do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          ingredients: {
+          ingredient: {
             type: :object,
             properties: {
               unit: {
@@ -184,7 +187,7 @@ RSpec.describe 'api/ingredients', type: :request do
       }
       response '200', 'create' do
         examples 'application/json' => {
-          'ingredients' => {
+          'ingredient' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -204,7 +207,12 @@ RSpec.describe 'api/ingredients', type: :request do
           'error_object' => {}
 
         }
-        let(:params) {}
+        let(:params) do
+          {
+            ingredient: build(:ingredient).attributes
+          }
+        end
+
         run_test! do |response|
           expect(response.status).to eq(200)
         end
