@@ -11,10 +11,7 @@ class Api::CategoriesController < Api::BaseController
   def update
     @category = Category.find_by(id: params[:id])
 
-    request = {}
-    request.merge!('description' => params.dig(:categories, :description))
-
-    @error_object = @category.errors.messages unless @category.update(request)
+    @error_object = @category.errors.messages unless @category&.update(category_params)
   end
 
   def show
@@ -23,19 +20,18 @@ class Api::CategoriesController < Api::BaseController
   end
 
   def create
-    @category = Category.new
+    @category = Category.new(category_params)
 
-    request = {}
-    request.merge!('description' => params.dig(:categories, :description))
-
-    @category.assign_attributes(request)
     @error_object = @category.errors.messages unless @category.save
   end
 
   def index
-    request = {}
-    request.merge!('description' => params.dig(:categories, :description))
-
     @categories = Category.all
+  end
+
+  private
+
+  def category_params
+    params.require(:category).permit(:description)
   end
 end

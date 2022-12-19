@@ -1,0 +1,906 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/categories/{id}":
+    delete:
+      summary: Destroy categories
+      tags:
+      - delete
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: delete
+          content:
+            application/json:
+              example:
+                category:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  recipes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    descriptions: text
+                    time: string
+                    difficulty: enum_type
+                    category_id: foreign_key
+                    user_id: foreign_key
+                    ingredients:
+                    - id: integer
+                      created_at: datetime
+                      updated_at: datetime
+                      unit: enum_type
+                      amount: float
+                      recipe_id: foreign_key
+                  description: text
+                  category_id: foreign_key
+                error_message: string
+    put:
+      summary: Update categories
+      tags:
+      - update
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                category:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  recipes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    descriptions: text
+                    time: string
+                    difficulty: enum_type
+                    category_id: foreign_key
+                    user_id: foreign_key
+                    ingredients:
+                    - id: integer
+                      created_at: datetime
+                      updated_at: datetime
+                      unit: enum_type
+                      amount: float
+                      recipe_id: foreign_key
+                  description: text
+                  category_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: object
+                  properties:
+                    description:
+                      type: text
+                      example: text
+    get:
+      summary: Show categories
+      tags:
+      - show
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                categories:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  recipes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    descriptions: text
+                    time: string
+                    difficulty: enum_type
+                    category_id: foreign_key
+                    user_id: foreign_key
+                    ingredients:
+                    - id: integer
+                      created_at: datetime
+                      updated_at: datetime
+                      unit: enum_type
+                      amount: float
+                      recipe_id: foreign_key
+                  description: text
+                  category_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "/api/categories":
+    post:
+      summary: Create categories
+      tags:
+      - create
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                category:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  recipes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    descriptions: text
+                    time: string
+                    difficulty: enum_type
+                    category_id: foreign_key
+                    user_id: foreign_key
+                    ingredients:
+                    - id: integer
+                      created_at: datetime
+                      updated_at: datetime
+                      unit: enum_type
+                      amount: float
+                      recipe_id: foreign_key
+                  description: text
+                  category_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: object
+                  properties:
+                    description:
+                      type: text
+                      example: text
+    get:
+      summary: List categories
+      tags:
+      - index
+      parameters: []
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                categories:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  recipes:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    title: string
+                    descriptions: text
+                    time: string
+                    difficulty: enum_type
+                    category_id: foreign_key
+                    user_id: foreign_key
+                    ingredients:
+                    - id: integer
+                      created_at: datetime
+                      updated_at: datetime
+                      unit: enum_type
+                      amount: float
+                      recipe_id: foreign_key
+                  description: text
+                  category_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categories:
+                  type: object
+                  properties:
+                    description:
+                      type: text
+                      example: text
+                pagination_page:
+                  type: pagination_page
+                  example: pagination_page
+                pagination_limit:
+                  type: pagination_limit
+                  example: pagination_limit
+  "/api/ingredients/{id}":
+    delete:
+      summary: Destroy ingredients
+      tags:
+      - delete
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: delete
+          content:
+            application/json:
+              example:
+                ingredients:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  unit: enum_type
+                  amount: float
+                  recipe_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    put:
+      summary: Update ingredients
+      tags:
+      - update
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                ingredient:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  unit: enum_type
+                  amount: float
+                  recipe_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ingredients:
+                  type: object
+                  properties:
+                    unit:
+                      type: float
+                      example: float
+                    amount:
+                      type: float
+                      example: float
+                    recipe_id:
+                      type: foreign_key
+                      example: foreign_key
+    get:
+      summary: Show ingredients
+      tags:
+      - show
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                ingredients:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  unit: enum_type
+                  amount: float
+                  recipe_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "/api/ingredients":
+    post:
+      summary: Create ingredients
+      tags:
+      - create
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                ingredient:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  unit: enum_type
+                  amount: float
+                  recipe_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ingredient:
+                  type: object
+                  properties:
+                    unit:
+                      type: float
+                      example: float
+                    amount:
+                      type: float
+                      example: float
+                    recipe_id:
+                      type: foreign_key
+                      example: foreign_key
+    get:
+      summary: List ingredients
+      tags:
+      - index
+      parameters: []
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                ingredients:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  unit: enum_type
+                  amount: float
+                  recipe_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ingredients:
+                  type: object
+                  properties:
+                    unit:
+                      type: float
+                      example: float
+                    amount:
+                      type: float
+                      example: float
+                    recipe_id:
+                      type: foreign_key
+                      example: foreign_key
+                pagination_page:
+                  type: pagination_page
+                  example: pagination_page
+                pagination_limit:
+                  type: pagination_limit
+                  example: pagination_limit
+  "/api/recipes/{id}":
+    delete:
+      summary: Destroy recipes
+      tags:
+      - delete
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: delete
+          content:
+            application/json:
+              example: {}
+    put:
+      summary: Update recipes
+      tags:
+      - update
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                recipe:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  descriptions: text
+                  time: string
+                  difficulty: enum_type
+                  category_id: foreign_key
+                  ingredients:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    unit: enum_type
+                    amount: float
+                    recipe_id: foreign_key
+                  user_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: string
+                    descriptions:
+                      type: text
+                      example: text
+                    time:
+                      type: string
+                      example: string
+                    difficulty:
+                      type: enum_type
+                      example: enum_type
+                    category_id:
+                      type: foreign_key
+                      example: foreign_key
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+    get:
+      summary: Show recipes
+      tags:
+      - show
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        description: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                recipes:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  descriptions: text
+                  time: string
+                  difficulty: enum_type
+                  category_id: foreign_key
+                  ingredients:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    unit: enum_type
+                    amount: float
+                    recipe_id: foreign_key
+                  user_id: foreign_key
+                error_message: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+  "/api/recipes":
+    post:
+      summary: Create recipes
+      tags:
+      - create
+      parameters: []
+      responses:
+        '200':
+          description: create
+          content:
+            application/json:
+              example:
+                recipe:
+                  id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  descriptions: text
+                  time: string
+                  difficulty: enum_type
+                  category_id: foreign_key
+                  ingredients:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    unit: enum_type
+                    amount: float
+                    recipe_id: foreign_key
+                  user_id: foreign_key
+                error_object: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  properties:
+                    title:
+                      type: string
+                      example: string
+                    descriptions:
+                      type: text
+                      example: text
+                    time:
+                      type: string
+                      example: string
+                    difficulty:
+                      type: enum_type
+                      example: enum_type
+                    category_id:
+                      type: foreign_key
+                      example: foreign_key
+                    user_id:
+                      type: foreign_key
+                      example: foreign_key
+    get:
+      summary: List recipes
+      tags:
+      - index
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: title
+        in: query
+        description: recipe title
+        required: false
+        schema:
+          type: string
+      - name: difficulty
+        in: query
+        description: 'recipe''s difficulty. Valid values: ''easy'', ''normal'', ''challenging'''
+        required: false
+        schema:
+          type: string
+      - name: min_time
+        in: query
+        description: minimum duration in seconds
+        required: false
+        schema:
+          type: integer
+      - name: max_time
+        in: query
+        description: maximum duration in seconds
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: index
+          content:
+            application/json:
+              example:
+                total_pages: integer
+                recipes:
+                - id: integer
+                  created_at: datetime
+                  updated_at: datetime
+                  title: string
+                  descriptions: text
+                  time: HH:MM:SS
+                  difficulty: enum_type
+                  category_id: foreign_key
+                  ingredients:
+                  - id: integer
+                    created_at: datetime
+                    updated_at: datetime
+                    unit: enum_type
+                    amount: float
+                    recipe_id: foreign_key
+                  user_id: foreign_key
+                error_message: string
+  "/api/recipes/{recipe_id}/reviews":
+    post:
+      summary: Create reviews
+      tags:
+      - create
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipe_id
+        in: path
+        description: The id of the recipe that being reviewed
+        required: true
+        schema:
+          type: integer
+      responses:
+        '201':
+          description: create
+          content:
+            application/json:
+              example:
+                id: 3
+                user_id: 1
+                recipe_id: 1
+                rating: 5
+                description: nice recipe!
+        '422':
+          description: create
+          content:
+            application/json:
+              example:
+                message:
+                - Rating must be an integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: object
+                  properties:
+                    rating:
+                      type: integer
+                      example: 5
+                      description: 'valid value: integer 1 to 5'
+                    description:
+                      type: text
+                      example: nice recipe!
+  "/api/recipes/{recipe_id}/reviews/{id}":
+    get:
+      summary: Show review
+      tags:
+      - show
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipe_id
+        in: path
+        description: The id of the recipe that being reviewed
+        required: true
+        schema:
+          type: integer
+      - name: id
+        in: path
+        description: The id of the review
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: show
+          content:
+            application/json:
+              example:
+                id: 3
+                rating: 5
+                description: nice recipe!
+                recipe:
+                  id: 10
+                  created_at: '2022-08-26T07:19:55.302+07:00'
+                  updated_at: '2022-08-26T07:19:55.302+07:00'
+                  title: Chicken Nugget
+                  time: '00:20:00'
+                  difficulty: easy
+                  category_id: 10
+                  user_id: 1
+                user:
+                  id: 1
+                  email: desmond@uniqexample.org
+                  created_at: '2022-08-26T07:19:55.289+07:00'
+                  updated_at: '2022-08-26T07:19:55.289+07:00'
+                  reset_password_token: 
+                  reset_password_sent_at: 
+                  remember_created_at: 
+                  current_sign_in_at: 
+                  last_sign_in_at: 
+                  current_sign_in_ip: 
+                  last_sign_in_ip: 
+                  sign_in_count: 0
+        '404':
+          description: show
+          content:
+            application/json:
+              example:
+                message: Resource not found
+    put:
+      summary: Update review
+      tags:
+      - update
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipe_id
+        in: path
+        description: The id of the recipe that being reviewed
+        required: true
+        schema:
+          type: integer
+      - name: id
+        in: path
+        description: The id of the review
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: update
+          content:
+            application/json:
+              example:
+                id: 3
+                rating: 5
+                description: nice recipe!
+                recipe:
+                  id: 10
+                  created_at: '2022-08-26T07:19:55.302+07:00'
+                  updated_at: '2022-08-26T07:19:55.302+07:00'
+                  title: Chicken Nugget
+                  time: '00:20:00'
+                  difficulty: easy
+                  category_id: 10
+                  user_id: 1
+                user:
+                  id: 1
+                  email: desmond@uniqexample.org
+                  created_at: '2022-08-26T07:19:55.289+07:00'
+                  updated_at: '2022-08-26T07:19:55.289+07:00'
+                  reset_password_token: 
+                  reset_password_sent_at: 
+                  remember_created_at: 
+                  current_sign_in_at: 
+                  last_sign_in_at: 
+                  current_sign_in_ip: 
+                  last_sign_in_ip: 
+                  sign_in_count: 0
+        '404':
+          description: update
+          content:
+            application/json:
+              example:
+                message: Resource not found
+        '422':
+          description: create
+          content:
+            application/json:
+              example:
+                message:
+                - Rating must be in 1..5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: object
+                  properties:
+                    rating:
+                      type: integer
+                      example: 5
+                      description: 'valid value: integer 1 to 5'
+                    description:
+                      type: text
+                      example: nice recipe!
+    delete:
+      summary: Delete review
+      tags:
+      - delete
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: recipe_id
+        in: path
+        description: The id of the recipe that being reviewed
+        required: true
+        schema:
+          type: integer
+      - name: id
+        in: path
+        description: The id of the review
+        required: true
+        schema:
+          type: integer
+      responses:
+        '204':
+          description: destroy
+          content:
+            application/json:
+              example: {}
+        '404':
+          description: destroy
+          content:
+            application/json:
+              example:
+                message: Resource not found
+servers:
+- url: "{defaultHost}"
+  variables:
+    defaultHost:
+      default: ''
+components:
+  securitySchemes:
+    bearerAuth:
+      name: Authorization
+      type: http
+      description: JWT Authorization header using the Bearer scheme.
+      scheme: bearer
+      bearerFormat: JWT

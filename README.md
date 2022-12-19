@@ -31,16 +31,17 @@ Build docker containers
 docker-compose build
 ```
 
-Initialize
-
-```bash
-docker-compose run web ruby ./bin/initialize
-```
-
 Setup database
 
 ```bash
 docker-compose run web bundle exec rake db:create db:migrate db:seed
+docker-compose run web bundle exec rake db:migrate RAILS_ENV=test
+```
+
+Initialize
+
+```bash
+docker-compose run web ruby ./bin/initialize
 ```
 
 Start the app

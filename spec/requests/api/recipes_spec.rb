@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.describe 'api/recipes', type: :request do
   before do
-    create(:recipe)
+    create(:recipe, time: '00:15:00')
   end
 
   # jitera-hook-for-rswag-example
@@ -11,68 +11,19 @@ RSpec.describe 'api/recipes', type: :request do
     delete 'Destroy recipes' do
       tags 'delete'
       consumes 'application/json'
-
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
-      parameter name: :params, in: :body, schema: {
-        type: :object,
-        properties: {
-        }
-      }
-      response '200', 'delete' do
-        examples 'application/json' => {
-          'recipes' => {
-            'id' => 'integer',
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
 
-            'created_at' => 'datetime',
-
-            'updated_at' => 'datetime',
-
-            'title' => 'string',
-
-            'descriptions' => 'text',
-
-            'time' => 'string',
-
-            'difficulty' => 'enum_type',
-
-            'category_id' => 'foreign_key',
-
-            'ingredients' =>
-  [
-    {
-
-      'id' => 'integer',
-
-      'created_at' => 'datetime',
-
-      'updated_at' => 'datetime',
-
-      'unit' => 'enum_type',
-
-      'amount' => 'float',
-
-      'recipe_id' => 'foreign_key'
-
-    }
-  ],
-
-            'user_id' => 'foreign_key'
-
-          },
-
-          'error_message' => 'string'
-
-        }
+      response '204', 'delete' do
+        examples 'application/json' => {}
 
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
-        let(:params) {}
-        let(:id) { create(:recipe).id }
+        let(:id) { create(:recipe, user: resource_owner).id }
 
         run_test! do |response|
-          expect(response.status).to eq(200)
+          expect(response.status).to eq(204)
         end
       end
     end
@@ -84,11 +35,11 @@ RSpec.describe 'api/recipes', type: :request do
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          recipes: {
+          recipe: {
             type: :object,
             properties: {
               title: {
@@ -125,9 +76,10 @@ RSpec.describe 'api/recipes', type: :request do
           }
         }
       }
+
       response '200', 'update' do
         examples 'application/json' => {
-          'recipes' => {
+          'recipe' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -174,9 +126,13 @@ RSpec.describe 'api/recipes', type: :request do
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
-        let(:id) { create(:recipe).id }
+        let(:id) { create(:recipe, user: resource_owner).id }
+        let(:params) do
+          {
+            recipe: build(:recipe).attributes
+          }
+        end
 
-        let(:params) {}
         run_test! do |response|
           expect(response.status).to eq(200)
         end
@@ -190,7 +146,7 @@ RSpec.describe 'api/recipes', type: :request do
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: 'id', in: :path, type: 'string', description: 'id'
+      parameter name: 'id', in: :path, type: 'integer', description: 'id'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
@@ -262,7 +218,7 @@ RSpec.describe 'api/recipes', type: :request do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          recipes: {
+          recipe: {
             type: :object,
             properties: {
               title: {
@@ -301,7 +257,7 @@ RSpec.describe 'api/recipes', type: :request do
       }
       response '200', 'create' do
         examples 'application/json' => {
-          'recipes' => {
+          'recipe' => {
             'id' => 'integer',
 
             'created_at' => 'datetime',
@@ -344,7 +300,12 @@ RSpec.describe 'api/recipes', type: :request do
           'error_object' => {}
 
         }
-        let(:params) {}
+        let(:params) do
+          {
+            recipe: build(:recipe).attributes
+          }
+        end
+
         run_test! do |response|
           expect(response.status).to eq(200)
         end
@@ -354,59 +315,16 @@ RSpec.describe 'api/recipes', type: :request do
 
   path '/api/recipes' do
     get 'List recipes' do
-      tags 'filter'
+      tags 'index'
       consumes 'application/json'
 
       security [bearerAuth: []]
-      parameter name: :params, in: :body, schema: {
-        type: :object,
-        properties: {
-          recipes: {
-            type: :object,
-            properties: {
-              title: {
-                type: :string,
-                example: 'string'
-              },
+      parameter name: 'title', in: :query, type: 'string', description: 'recipe title', required: false
+      parameter name: 'difficulty', in: :query, type: 'string', description: "recipe's difficulty. Valid values: 'easy', 'normal', 'challenging'", required: false
+      parameter name: 'min_time', in: :query, type: 'integer', description: 'minimum duration in seconds', required: false
+      parameter name: 'max_time', in: :query, type: 'integer', description: 'maximum duration in seconds', required: false
 
-              descriptions: {
-                type: :text,
-                example: 'text'
-              },
-
-              time: {
-                type: :string,
-                example: 'string'
-              },
-
-              difficulty: {
-                type: :enum_type,
-                example: 'enum_type'
-              },
-
-              category_id: {
-                type: :foreign_key,
-                example: 'foreign_key'
-              },
-
-              user_id: {
-                type: :foreign_key,
-                example: 'foreign_key'
-              }
-
-            }
-          },
-          pagination_page: {
-            type: :pagination_page,
-            example: 'pagination_page'
-          },
-          pagination_limit: {
-            type: :pagination_limit,
-            example: 'pagination_limit'
-          }
-        }
-      }
-      response '200', 'filter' do
+      response '200', 'index' do
         examples 'application/json' => {
           'total_pages' => 'integer',
 
@@ -424,7 +342,7 @@ RSpec.describe 'api/recipes', type: :request do
 
             'descriptions' => 'text',
 
-            'time' => 'string',
+            'time' => 'HH:MM:SS',
 
             'difficulty' => 'enum_type',
 
@@ -461,7 +379,7 @@ RSpec.describe 'api/recipes', type: :request do
         let(:resource_owner) { create(:user) }
         let(:token) { create(:access_token, resource_owner: resource_owner).token }
         let(:Authorization) { "Bearer #{token}" }
-        let(:params) {}
+
         run_test! do |response|
           expect(response.status).to eq(200)
         end

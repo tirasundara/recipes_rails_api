@@ -17,6 +17,14 @@ AllCops:
     - 'lib/tasks/*.rake'
     - 'config/**/*'
 
+RSpec/VariableName:
+  EnforcedStyle: snake_case
+  IgnoredPatterns:
+    - ^Authorization  # ignore this pattern since it is required by rswag
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 25
+
 Metrics/PerceivedComplexity:
   Max: 10
 

@@ -4,13 +4,14 @@ class Recipe < ApplicationRecord
   # jitera-anchor-dont-touch: relations
 
   has_many :ingredients, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   belongs_to :category
 
   belongs_to :user
 
   # jitera-anchor-dont-touch: enum
-  enum difficulty: %w[easy normal challenging], _suffix: true
+  enum difficulty: { easy: 0, normal: 1, challenging: 2 }, _suffix: true
 
   # jitera-anchor-dont-touch: file
 
@@ -21,14 +22,22 @@ class Recipe < ApplicationRecord
   validates :descriptions, length: { maximum: 65_535, minimum: 0, message: I18n.t('.out_of_range_error') },
                            presence: true
 
-  validates :time, length: { maximum: 255, minimum: 0, message: I18n.t('.out_of_range_error') }, presence: true
+  # My opinion:
+  # Personally, I prefer to store the time (duration) in an integer datatype representing duration in seconds in the database
+  # So, we will have:
+  # * Easier to perform query-comparation: BETWEEN, less than, greater than, etc
+  # * It will be faster to perform the search. Since, we don't need to convert string 'HH:MM:SS' to seconds in the db level to query recipes by time range
+
+  validates :time, length: { maximum: 8, minimum: 8, message: I18n.t('.out_of_range_error') },
+                   format: { with: DURATION_VALIDATION_FORMAT, message: I18n.t('.invalid_duration_format') },
+                   presence: true
 
   validates :difficulty, presence: true
 
   accepts_nested_attributes_for :ingredients
 
   def self.associations
-    [:ingredients]
+    %i[ingredients reviews]
   end
 
   # jitera-anchor-dont-touch: reset_password

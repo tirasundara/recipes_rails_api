@@ -5,54 +5,41 @@ class Api::RecipesController < Api::BaseController
 
   # jitera-anchor-dont-touch: actions
   def destroy
-    @recipe = Recipe.find_by(id: params[:id])
-    @error_message = true unless @recipe&.destroy
+    current_user.recipes.destroy(params[:id])
+
+    render json: {}, status: :no_content
   end
 
   def update
-    @recipe = Recipe.find_by(id: params[:id])
+    @recipe = current_user.recipes.find(params[:id])
 
-    request = {}
-    request.merge!('title' => params.dig(:recipes, :title))
-    request.merge!('descriptions' => params.dig(:recipes, :descriptions))
-    request.merge!('time' => params.dig(:recipes, :time))
-    request.merge!('difficulty' => params.dig(:recipes, :difficulty))
-    request.merge!('category_id' => params.dig(:recipes, :category_id))
-    request.merge!('user_id' => params.dig(:recipes, :user_id))
-
-    @error_object = @recipe.errors.messages unless @recipe.update(request)
+    @error_object = @recipe.errors.messages unless @recipe.update(recipe_params)
   end
 
   def show
-    @recipe = Recipe.find_by(id: params[:id])
+    @recipe = Recipe.includes(:ingredients, reviews: :user).find_by(id: params[:id])
     @error_message = true if @recipe.blank?
   end
 
   def create
-    @recipe = Recipe.new
+    @recipe = Recipe.new(recipe_params)
 
-    request = {}
-    request.merge!('title' => params.dig(:recipes, :title))
-    request.merge!('descriptions' => params.dig(:recipes, :descriptions))
-    request.merge!('time' => params.dig(:recipes, :time))
-    request.merge!('difficulty' => params.dig(:recipes, :difficulty))
-    request.merge!('category_id' => params.dig(:recipes, :category_id))
-    request.merge!('user_id' => params.dig(:recipes, :user_id))
-
-    @recipe.assign_attributes(request)
     @error_object = @recipe.errors.messages unless @recipe.save
   end
 
   def index
-    request = {}
+    @recipes = recipe_query_service.call(params)
 
-    request.merge!('title' => params.dig(:recipes, :title))
-    request.merge!('descriptions' => params.dig(:recipes, :descriptions))
-    request.merge!('time' => params.dig(:recipes, :time))
-    request.merge!('difficulty' => params.dig(:recipes, :difficulty))
-    request.merge!('category_id' => params.dig(:recipes, :category_id))
-    request.merge!('user_id' => params.dig(:recipes, :user_id))
+    render json: @recipes, each_serializer: RecipeSerializer
+  end
 
-    @recipes = Recipe.all
+  private
+
+  def recipe_query_service
+    @recipe_query_service ||= ::Queries::Recipe.new(::Recipe.includes(:ingredients, reviews: :user))
+  end
+
+  def recipe_params
+    params.require(:recipe).permit(:title, :descriptions, :time, :difficulty, :category_id, :user_id)
   end
 end

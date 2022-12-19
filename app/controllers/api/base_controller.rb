@@ -31,8 +31,10 @@ module Api
 
     private
 
-    def base_render_record_not_found(exception)
-      render json: { message: exception.message }, status: :not_found
+    def base_render_record_not_found(_exception)
+      # don't show this exception message to client
+      # it can be dangerous, since it exposes the table's name and its attributes (SQL param)
+      render json: { message: I18n.t('errors.resource_not_found') }, status: :not_found
     end
 
     def base_render_unprocessable_entity(exception)

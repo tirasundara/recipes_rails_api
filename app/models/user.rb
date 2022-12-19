@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   has_many :ingredients, through: :recipes
 
+  has_many :reviews, dependent: :destroy
+
   # jitera-anchor-dont-touch: enum
 
   # jitera-anchor-dont-touch: file
@@ -23,7 +25,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :recipes
 
   def self.associations
-    [:recipes]
+    %i[recipes ingredients reviews]
   end
 
   # jitera-anchor-dont-touch: reset_password

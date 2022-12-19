@@ -34,7 +34,7 @@ gem 'rails-i18n'
 # jitera-hook-for-rollbar
 gem 'sass-rails', '~> 5'
 gem 'sidekiq'
-gem 'simple_form'
+gem 'simple_form', '~> 5.1'
 gem 'slim'
 gem 'turbo-rails'
 # jitera-hook-for-twilio
