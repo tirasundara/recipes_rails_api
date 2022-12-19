@@ -26,7 +26,7 @@ class WeightConversion
     # ...
   }.freeze
 
-  attr_accessor :base
+  attr_reader :base
 
   def initialize(base)
     @base = base
